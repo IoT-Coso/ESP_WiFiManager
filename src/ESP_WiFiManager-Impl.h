@@ -228,6 +228,8 @@ ESP_WiFiManager::ESP_WiFiManager(const char *iHostname)
 #else		//ESP32
     String _hostname = "ESP32-" + String(ESP_getChipId(), HEX);
     
+
+    
 #endif
     _hostname.toUpperCase();
 
@@ -1093,8 +1095,8 @@ void ESP_WiFiManager::handleRoot()
   page += _customHeadElement;
   page += FPSTR(WM_HTTP_HEAD_END);
   page += "<h2>";
-  page += _apName;
-
+  page += _apName; // mattia
+  //page += getUID();
   if (WiFi_SSID() != "")
   {
     if (WiFi.status() == WL_CONNECTED)
@@ -1179,6 +1181,7 @@ void ESP_WiFiManager::handleWifi()
       String rssiQ;
       rssiQ += quality;
       item.replace("{v}", WiFi.SSID(networkIndices[i]));
+      item.replace("{pollo}", "polpetta3");
       item.replace("{r}", rssiQ);
 
 #ifdef ESP8266
@@ -1204,7 +1207,7 @@ void ESP_WiFiManager::handleWifi()
 
     page += "<br/>";
   }
-  
+  //page +=getUID();
   page += "<small>*Hint: To reuse the saved WiFi credentials, leave SSID and PWD fields empty</small>";
 
   page += FPSTR(WM_HTTP_FORM_START);
@@ -1252,6 +1255,7 @@ void ESP_WiFiManager::handleWifi()
       snprintf(parLength, 2, "%d", _params[i]->getValueLength());
       pitem.replace("{l}", parLength);
       pitem.replace("{v}", _params[i]->getValue());
+      pitem.replace("{pollo}", "polpetta4");
       pitem.replace("{c}", _params[i]->getCustomHTML());
     }
     else
@@ -1294,6 +1298,7 @@ void ESP_WiFiManager::handleWifi()
     item.replace("{p}", "Static IP");
     item.replace("{l}", "15");
     item.replace("{v}", _WiFi_STA_IPconfig._sta_static_ip.toString());
+    item.replace("{pollo}", "polpetta5");
 
     page += item;
 
@@ -1304,6 +1309,7 @@ void ESP_WiFiManager::handleWifi()
     item.replace("{p}", "Gateway IP");
     item.replace("{l}", "15");
     item.replace("{v}", _WiFi_STA_IPconfig._sta_static_gw.toString());
+    item.replace("{pollo}", "polpetta6");
 
     page += item;
 
@@ -1314,6 +1320,7 @@ void ESP_WiFiManager::handleWifi()
     item.replace("{p}", "Subnet");
     item.replace("{l}", "15");
     item.replace("{v}", _WiFi_STA_IPconfig._sta_static_sn.toString());
+    item.replace("{pollo}", "polpetta7");
 
   #if USE_CONFIGURABLE_DNS
     //***** Added for DNS address options *****
@@ -1326,7 +1333,8 @@ void ESP_WiFiManager::handleWifi()
     item.replace("{p}", "DNS1 IP");
     item.replace("{l}", "15");
     item.replace("{v}", _WiFi_STA_IPconfig._sta_static_dns1.toString());
-
+    item.replace("{pollo}", "polpetta8");
+    
     page += item;
 
     item = FPSTR(WM_HTTP_FORM_LABEL);
@@ -1336,6 +1344,7 @@ void ESP_WiFiManager::handleWifi()
     item.replace("{p}", "DNS2 IP");
     item.replace("{l}", "15");
     item.replace("{v}", _WiFi_STA_IPconfig._sta_static_dns2.toString());
+    item.replace("{pollo}", "polpetta9");
     //***** End added for DNS address options *****
   #endif
 
@@ -1463,6 +1472,7 @@ void ESP_WiFiManager::handleWifiSave()
   page += FPSTR(WM_HTTP_HEAD_END);
   page += FPSTR(WM_HTTP_SAVED);
   page.replace("{v}", _apName);
+  page.replace("{pollo}", "polpetta");
   page.replace("{x}", _ssid);
   page.replace("{x1}", _ssid1);
   
@@ -1498,6 +1508,7 @@ void ESP_WiFiManager::handleServerClose()
   String page = FPSTR(WM_HTTP_HEAD_START);
   
   page.replace("{v}", "Close Server");
+  page.replace("{pollo}", "polpettissima2");
   page += FPSTR(WM_HTTP_SCRIPT);
   page += FPSTR(WM_HTTP_STYLE);
   page += _customHeadElement;
@@ -1548,6 +1559,7 @@ void ESP_WiFiManager::handleInfo()
   String page = FPSTR(WM_HTTP_HEAD_START);
   
   page.replace("{v}", "Info");
+  page.replace("{pollo}", "polpettissima2");
   page += FPSTR(WM_HTTP_SCRIPT);
   page += FPSTR(WM_HTTP_SCRIPT_NTP);
   page += FPSTR(WM_HTTP_STYLE);
@@ -1745,6 +1757,7 @@ void ESP_WiFiManager::handleScan()
     
     rssiQ += quality;
     item.replace("{v}", WiFi.SSID(indices[i]));
+    item.replace("{pollo}", "polpetta2");
     item.replace("{r}", rssiQ);
 
 #ifdef ESP8266
@@ -1792,6 +1805,7 @@ void ESP_WiFiManager::handleReset()
   String page = FPSTR(WM_HTTP_HEAD_START);
   
   page.replace("{v}", "WiFi Information");
+  page.replace("{pollo}", "polpettissima4");
   page += FPSTR(WM_HTTP_SCRIPT);
   page += FPSTR(WM_HTTP_STYLE);
   page += _customHeadElement;
