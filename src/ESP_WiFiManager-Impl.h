@@ -1088,14 +1088,17 @@ void ESP_WiFiManager::handleRoot()
 
   String page = FPSTR(WM_HTTP_HEAD_START);
   
-  page.replace("{v}", "Options");
+  page.replace("{v}", "VIVOsmart Options");
   page += FPSTR(WM_HTTP_SCRIPT);
   page += FPSTR(WM_HTTP_SCRIPT_NTP);
   page += FPSTR(WM_HTTP_STYLE);
   page += _customHeadElement;
   page += FPSTR(WM_HTTP_HEAD_END);
-  page += "<h2>";
-  page += _apName; // mattia
+  page += " pollo-" + String(ESP_getChipId());
+  byte mac[6];  
+  WiFi.macAddress(mac);  
+  String ret = "";
+  page += "0000" + String(mac[5]) + String(mac[4])+ String(mac[3]) + String(mac[2])+ String(mac[1]) + String(mac[0]);
   //page += getUID();
   if (WiFi_SSID() != "")
   {
@@ -1151,7 +1154,7 @@ void ESP_WiFiManager::handleWifi()
   page += FPSTR(WM_HTTP_STYLE);
   page += _customHeadElement;
   page += FPSTR(WM_HTTP_HEAD_END);
-  page += F("<h2>Configuration</h2>");
+  page += F("<h2>WiFi Configuration</h2>");
 
   //  KH, New
   numberOfNetworks = scanWifiNetworks(&networkIndices);
@@ -2097,6 +2100,7 @@ String ESP_WiFiManager::toStringIp(const IPAddress& ip)
 // We can't use WiFi.SSID() in ESP32 as it's only valid after connected.
 // SSID and Password stored in ESP32 wifi_ap_record_t and wifi_config_t are also cleared in reboot
 // Have to create a new function to store in EEPROM/SPIFFS for this purpose
+
 
 String ESP_WiFiManager::getStoredWiFiSSID()
 {
