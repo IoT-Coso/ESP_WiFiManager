@@ -1094,13 +1094,11 @@ void ESP_WiFiManager::handleRoot()
   page += FPSTR(WM_HTTP_STYLE);
   page += _customHeadElement;
   page += FPSTR(WM_HTTP_HEAD_END);
-  page += " pollo-" + String(ESP_getChipId());
   byte mac[6];  
   WiFi.macAddress(mac);  
   String ret = "";
-  page += "0000" + String(mac[5]) + String(mac[4])+ String(mac[3]) + String(mac[2])+ String(mac[1]) + String(mac[0]);
-  //page += getUID();
-  if (WiFi_SSID() != "")
+  page += "<div style='margin: 0px 20px 20px 20px;'>Dispositivo numero: <b>0000" + String(mac[5]) + String(mac[4])+ String(mac[3]) + String(mac[2])+ String(mac[1]) + String(mac[0]) + "</b></div>";
+  /*if (WiFi_SSID() != "")
   {
     if (WiFi.status() == WL_CONNECTED)
     {
@@ -1113,9 +1111,9 @@ void ESP_WiFiManager::handleRoot()
       page += WiFi_SSID();
       page += "</s>";
     }
-  }
+  }*/
 
-  page += "</h2>";
+  //page += "</h2>";
   page += FPSTR(WM_HTTP_PORTAL_OPTIONS);
   page += F("<div class=\"msg\">");
   reportStatus(page);
@@ -2100,7 +2098,6 @@ String ESP_WiFiManager::toStringIp(const IPAddress& ip)
 // We can't use WiFi.SSID() in ESP32 as it's only valid after connected.
 // SSID and Password stored in ESP32 wifi_ap_record_t and wifi_config_t are also cleared in reboot
 // Have to create a new function to store in EEPROM/SPIFFS for this purpose
-
 
 String ESP_WiFiManager::getStoredWiFiSSID()
 {
